@@ -1,5 +1,9 @@
 stop_times/
 transitland/
+stop_times_updated/
+zipfiles_test/
+zipfiles/
+trips*
 tl_*
 maryland-*
 md_*
