@@ -12,7 +12,7 @@ def restrict_to_BaltimoreCity(df, gdf_Baltimore, geocode_col):
     merged_df = gdf_Baltimore.merge(df, left_on = 'GEOID20', right_on = geocode_col)
     merged_df['id'] = merged_df[geocode_col]
 
-    return merged_df
+    return merged_df[['geometry', 'C000', 'id']]
 
 
 def prepare_data_Baltimore(shapefile_path, md_rac_path, md_wac_path):
