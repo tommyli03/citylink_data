@@ -1,7 +1,0 @@
-service_id,service_description
-1,August 28 2022 Service Change (Weekday)
-2,August 28 2022 Service Change (Saturday)
-3,August 28 2022 Service Change (Sunday/Holiday)
-1911,February 05 2023 Service Change (Weekday)
-1912,February 05 2023 Service Change (Saturday)
-1913,February 05 2023 Service Change (Sunday/Holiday)

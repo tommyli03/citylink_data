@@ -1,4 +1,4 @@
-stop_times/
+stop_times_temp/
 transitland/
 stop_times_updated/
 zipfiles_test/
@@ -9,3 +9,5 @@ maryland-*
 md_*
 *.zip
 *.csv
+redline/
+updated_gtfs/

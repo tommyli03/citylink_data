@@ -1,2 +1,0 @@
-feed_publisher_name,feed_publisher_url,feed_lang,feed_start_date,feed_end_date,feed_version,feed_contact_email
-Maryland Transit Administration,https://mta.maryland.gov/,en,20230117,20230617,20230117,mta-oi@mdot.state.md.us
