@@ -89,7 +89,7 @@ def add_red_line(period = 8, speed = 20, earliest_hour = 8, latest_hour = 10):
 
     trips['route_id'] = [99999 for i in range(num_of_trips * 2)]
     # TODO: service_id should reflect what the GTFS spec says
-    # use calendar_dates.txt to generate the correct service_id
+    # use calendar_attributes.txt to generate the correct service_id
     trips['service_id'] = 1911
     trips['trip_id'] = [i + 1 for i in range(num_of_trips * 2)]
     trips['trip_headsign'] = ['Centers for Medicare and Medicaid Services' for i in range(num_of_trips)] + ['Canton' for i in range(num_of_trips)]
