@@ -2,6 +2,9 @@ import datetime
 import pandas as pd
 import os
 
+# TODO: correct all the paths
+# TODO: add the inputs to the function into the config file
+
 class filterTool:
 
     @staticmethod

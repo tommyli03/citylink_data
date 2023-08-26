@@ -4,8 +4,12 @@ from tqdm import tqdm
 import shutil
 from util import *
 
+# TODO: correct all the paths
+# TODO: add bus_data_csv_path and gtfs_stop_times_path to the function into the config file
 bus_data_csv_path = 'processed_data/bus_accurate_data.csv'
-gtfs_stop_times = pd.read_csv('transitland/stop_times.txt')
+gtfs_stop_times_path = 'transitland/stop_times.txt'
+
+gtfs_stop_times = pd.read_csv(gtfs_stop_times_path)
 
 observed_times = pd.read_csv(bus_data_csv_path)
 unique_dates = observed_times['date'].unique()
@@ -76,3 +80,5 @@ for filename in tqdm(os.listdir(updated_stop_times_folder)):
     zip_path = os.path.join(zipfiles_folder, zip_filename)
     shutil.make_archive(zip_path, 'zip', copy_folder)
     shutil.rmtree(copy_folder)
+
+shutil.rmtree(updated_stop_times_folder)
