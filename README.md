@@ -10,8 +10,8 @@ pip install -r requirements.txt
 ## Todo
 ### Tommy
 - [ ] Configuration file with yaml [tutorial](https://betterdatascience.com/python-yaml-configuration-files/)
-      - [ ] mostly folder paths
-      - [ ] input to important functions
+ - [ ] mostly folder paths
+ - [ ] input to important functions
 - [ ] Fix Red Line route.txt (see TODO's in the python code)
 - [ ] Add GTFS for multiple transit modes
 
