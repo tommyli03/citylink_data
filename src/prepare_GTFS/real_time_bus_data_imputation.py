@@ -2,7 +2,7 @@ import pandas as pd
 import os
 from tqdm import tqdm
 import shutil
-from util import *
+from src.prepare_GTFS.util import *
 
 # TODO: correct all the paths
 # TODO: add bus_data_csv_path and gtfs_stop_times_path to the function into the config file
