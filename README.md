@@ -5,6 +5,7 @@ pip install -r requirements.txt
 ```
 
 ## Directory Tree
+```md
 .
 ├── README.md
 ├── output.zip
@@ -152,3 +153,4 @@ pip install -r requirements.txt
 │       ├── travel_time_Baltimore.py
 │       └── travel_time_computation.py
 └── transit.ipynb
+```
