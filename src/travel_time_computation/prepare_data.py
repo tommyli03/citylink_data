@@ -16,6 +16,7 @@ def restrict_to_BaltimoreCity(df, gdf_Baltimore, geocode_col):
 
 
 def prepare_data_Baltimore(shapefile_path, md_rac_path, md_wac_path):
+    # Read in shapefile for block groups in Maryland
     block_gdf = gpd.read_file(shapefile_path)
     block_gdf.geometry = block_gdf.geometry.centroid
 
@@ -24,7 +25,7 @@ def prepare_data_Baltimore(shapefile_path, md_rac_path, md_wac_path):
 
     gdf_Baltimore['GEOID20'] = gdf_Baltimore['GEOID20'].astype(int)
 
-    md_rac_df = restrict_to_BaltimoreCity(pd.read_csv(md_rac_path), 'h_geocode')
-    md_wac_df = restrict_to_BaltimoreCity(pd.read_csv(md_wac_path), 'w_geocode')
+    md_rac_df = restrict_to_BaltimoreCity(pd.read_csv(md_rac_path), block_gdf, 'h_geocode')
+    md_wac_df = restrict_to_BaltimoreCity(pd.read_csv(md_wac_path), block_gdf, 'w_geocode')
 
     return md_rac_df, md_wac_df

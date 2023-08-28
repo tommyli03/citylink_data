@@ -3,7 +3,7 @@ import datetime
 from travel_time_computation import compute_travel_time_matrices
 
 # TODO: add the inputs to the function into the config file
-shapefile_path = 'raw_data/tl_2020_24_tabblock20.shp'
+shapefile_path = 'raw_data/block_group/tl_2020_24_tabblock20.shp'
 md_rac_path = 'raw_data/md_rac_S000_JT00_2020.csv.gz'
 md_wac_path = 'raw_data/md_wac_S000_JT00_2020.csv.gz'
 # Filepath to OSM data
@@ -11,7 +11,11 @@ osm_fp = "maryland-latest.osm.pbf"
 # Filepath to GTFS data
 date = "2023-02-08"
 departure_time = datetime.datetime(2023, 2, 8, 8, 30)
-GTFS = [f"processed_data/updated_gtfs/{date}.zip"]
+GTFS = [f"processed_data/updated_gtfs/{date}.zip", 
+        'raw_data/rail_gtfs.zip', 
+        'raw_data/subway_gtfs.zip',
+        'raw_data/commuterbus_gtfs.zip', 
+        'raw_data/train_gtfs.zip']
 # Filepath to newline GTFS data
 redline = "processed_data/redline.zip"
 
