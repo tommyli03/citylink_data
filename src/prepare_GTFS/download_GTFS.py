@@ -1,12 +1,13 @@
 import requests
 
+# TODO: add these paths to the function into the config file
 download_dir = 'raw_data/'
 api_key = 'T2Jljq0EQqqe1JMfijkn3RdtVxoYpwuq'
 bus_feed_link = '8523f088e05dcd273b369dd4d65eb771c73c0a22'
 rail_feed_link = 'c4233b29806296fc80209881fd9cec6c49fd9380'
 subway_feed_link = '9b0a275f899fcb67a9d2107be8b9976326507a35'
 commuterbus_feed_link = '6cc96d82827a3dfb39807521ad8a77cf8d77b368'
-train_feed_link = '38b428d34bd8274a8f7812c9845c2947d2a20ed1'
+train_feed_link = '32c1ab0bebce48f0f58a8110ebe245ccb5008930'
 
 
 def get_transit_land_url(feed_link, api_key=api_key):
