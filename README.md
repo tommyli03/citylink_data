@@ -1,7 +1,17 @@
 ## Requirements
 Dependency can be installed using the following command:
 ```
-pip install -r requirements.txt
+poetry install
+```
+
+To activate the virtual environment, run
+```
+poetry shell
+```
+
+To deactivate, run
+```
+exit
 ```
 
 ## Links
