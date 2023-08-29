@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "citylink-analysis"
+version = "0.1.0"
+description = ""
+authors = ["Yangxinyu <xinyux@wharton.upenn.edu>"]
+readme = "README.md"
+packages = [{include = "citylink_analysis"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+geopandas = "^0.13.2"
+geopy = "^2.4.0"
+pandas = "^2.0.3"
+numpy = "^1.25.2"
+r5py = "^0.1.0"
+tqdm = "^4.66.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
