@@ -1,4 +1,5 @@
 import os
+import pandas as pd
 import datetime
 from travel_time_computation import compute_travel_time_matrices
 
@@ -30,5 +31,9 @@ matrix_before_redline, matrix_after_redline = \
     compute_travel_time_matrices(md_rac_df, md_wac_df, departure_time, osm_fp, GTFS, redline, wait_minutes=wait_minutes)
 
 os.makedirs('processed_data/travel_time_matrices', exist_ok=True)
-matrix_before_redline.to_csv(f"processed_data/travel_time_matrices/{date}_before_redline.csv")
-matrix_after_redline.to_csv(f"processed_data/travel_time_matrices/{date}_after_redline.csv")
+matrix_before_redline.to_csv(f"processed_data/travel_time_matrices/{date}_before_redline.csv", index = False)
+matrix_after_redline.to_csv(f"processed_data/travel_time_matrices/{date}_after_redline.csv", index = False)
+
+travel_time = matrix_before_redline.merge(matrix_after_redline, on=['from_id', 'to_id'], suffixes=('_before', '_after'))
+
+travel_time.to_csv(f"processed_data/travel_time_matrices/{date}_travel_time.csv", index = False)
