@@ -4,7 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["Yangxinyu <xinyux@wharton.upenn.edu>"]
 readme = "README.md"
-packages = [{include = "citylink_analysis"}]
+packages = [{include = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
