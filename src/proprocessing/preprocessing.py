@@ -83,7 +83,7 @@ def preprocess_observed_bus_times(bus_data_csv_path: str,
 
 if __name__ == "__main__":
     preprocess_observed_bus_times(
-        'bus_accurate_data.csv',
+        'processed_data/bus_accurate_data.csv',
         [datetime.date(2023, 2, 8), datetime.date(2023, 4, 25)],
         [7, 10]
     )
