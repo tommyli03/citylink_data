@@ -40,7 +40,7 @@ for date, stop_times_df in tqdm(observed_times_by_date.items()):
 
 
 print("Imputing fully missing times:")
-updated_stop_times_folder = "processed_data/stop_times_updated"
+updated_stop_times_folder = f"{config["processed_data_path"]}stop_times_updated"
 os.makedirs(updated_stop_times_folder, exist_ok=True)  
 
 for file in tqdm(file_paths):
@@ -52,11 +52,11 @@ for file in tqdm(file_paths):
         df = df.append(new_data)
     df.to_csv(f'{updated_stop_times_folder}/{file}', index=False)
 
-shutil.rmtree('processed_data/stop_times_temp/')
+shutil.rmtree(f'{config["processed_data_path"]}stop_times_temp/')
 
-transitland_folder = 'raw_data/transitland/'
-copy_folder = 'raw_data/transitland_copy/'
-zipfiles_folder = 'processed_data/updated_gtfs'
+transitland_folder = f'{config["raw_data_path"]}{config["transitland_path"]}'
+copy_folder = f'{config["raw_data_path"]}transitland_copy/'
+zipfiles_folder = f'{config["processed_data_path"]}updated_gtfs'
 os.makedirs(zipfiles_folder, exist_ok=True)  
 
 print("Creating GTFS zip files:")

@@ -6,19 +6,23 @@ import time
 import os
 import shutil
 from itertools import accumulate
+import yaml
 
 def cumulativeSum(lst):
     return list(accumulate(lst))
 
+with open('src/prepare_GTFS/configs/config.yaml', "r") as f:
+    config = yaml.load(f, Loader=yaml.FullLoader)
+
 # TODO: add the inputs to the function into the config file
 
-def add_red_line(period = 8, speed = 20, earliest_hour = 7, latest_hour = 10):
+def add_red_line(period, speed, earliest_hour, latest_hour):
 
     num_of_trips = int((latest_hour - earliest_hour) * 60 / period)
 
-    stations = gpd.read_file("Baltimore Red Line- Stations.csv", crs=4326)
+    stations = gpd.read_file(f'{config["raw_data_path"]}Baltimore Red Line- Stations.csv', crs=4326)
 
-    segments = gpd.read_file("Baltimore Red Line- Alignment.csv", crs=4326)
+    segments = gpd.read_file(f'{config["raw_data_path"]}Baltimore Red Line- Alignment.csv', crs=4326)
 
     res = segments.apply(lambda x: [y for y in x['geometry'].coords], axis=1).loc[0]
 
@@ -145,4 +149,4 @@ def add_red_line(period = 8, speed = 20, earliest_hour = 7, latest_hour = 10):
 
 
 if __name__ == "__main__":
-    add_red_line(8, 20, 7, 10)
+    add_red_line(config["period"], config["speed"], config["early_time"], config["late_time"])
