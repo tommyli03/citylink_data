@@ -1,4 +1,5 @@
 import pandas as pd
+import yaml
 import os
 from tqdm import tqdm
 import shutil
@@ -6,8 +7,11 @@ from src.prepare_GTFS.util import *
 
 # TODO: correct all the paths
 # TODO: add bus_data_csv_path and gtfs_stop_times_path to the function into the config file
-bus_data_csv_path = 'processed_data/bus_accurate_data.csv'
-gtfs_stop_times_path = 'transitland/stop_times.txt'
+with open('src/prepare_GTFS/configs/config.yaml', "r") as f:
+    config = yaml.load(f, Loader=yaml.FullLoader)
+processed_data_path = config["processed_data_path"]
+bus_data_csv_path = f'{config["processed_data_path"]}{config["bus_accurate_csv"]}'
+gtfs_stop_times_path = f'{config["raw_data_path"]}{config["transitland_path"]}{config["stop_times_path"]}'
 
 gtfs_stop_times = pd.read_csv(gtfs_stop_times_path)
 
@@ -36,7 +40,7 @@ for date, stop_times_df in tqdm(observed_times_by_date.items()):
 
 
 print("Imputing fully missing times:")
-updated_stop_times_folder = "stop_times_updated"
+updated_stop_times_folder = "processed_data/stop_times_updated"
 os.makedirs(updated_stop_times_folder, exist_ok=True)  
 
 for file in tqdm(file_paths):
@@ -48,11 +52,11 @@ for file in tqdm(file_paths):
         df = df.append(new_data)
     df.to_csv(f'{updated_stop_times_folder}/{file}', index=False)
 
-shutil.rmtree('stop_times_temp/')
+shutil.rmtree('processed_data/stop_times_temp/')
 
-transitland_folder = 'transitland'
-copy_folder = 'transitland_copy/'
-zipfiles_folder = 'updated_gtfs'
+transitland_folder = 'raw_data/transitland/'
+copy_folder = 'raw_data/transitland_copy/'
+zipfiles_folder = 'processed_data/updated_gtfs'
 os.makedirs(zipfiles_folder, exist_ok=True)  
 
 print("Creating GTFS zip files:")

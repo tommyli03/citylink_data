@@ -60,7 +60,7 @@ def impute_partial_times(trip_df):
 def impute_full_times(trip_id, file_paths):
     file_rand = random.sample(file_paths, len(file_paths))
     for file_path in file_rand:
-        df = pd.read_csv(f'stop_times_temp/{file_path}')
+        df = pd.read_csv(f'processed_data/stop_times_temp/{file_path}')
         trip_ids_to_replace = df.loc[df.arrival_time.isna()].trip_id.unique()
         if trip_id not in trip_ids_to_replace:
             return df.loc[df.trip_id == trip_id] 

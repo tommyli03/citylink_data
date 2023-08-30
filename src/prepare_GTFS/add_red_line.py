@@ -10,10 +10,9 @@ from itertools import accumulate
 def cumulativeSum(lst):
     return list(accumulate(lst))
 
-# TODO: Correct all the paths
 # TODO: add the inputs to the function into the config file
 
-def add_red_line(period = 8, speed = 20, earliest_hour = 8, latest_hour = 10):
+def add_red_line(period = 8, speed = 20, earliest_hour = 7, latest_hour = 10):
 
     num_of_trips = int((latest_hour - earliest_hour) * 60 / period)
 
@@ -88,8 +87,7 @@ def add_red_line(period = 8, speed = 20, earliest_hour = 8, latest_hour = 10):
     trips = pd.DataFrame()
 
     trips['route_id'] = [99999 for i in range(num_of_trips * 2)]
-    # TODO: service_id should reflect what the GTFS spec says
-    # use calendar_attributes.txt to generate the correct service_id
+
     trips['service_id'] = 1911
     trips['trip_id'] = [i + 1 for i in range(num_of_trips * 2)]
     trips['trip_headsign'] = ['Centers for Medicare and Medicaid Services' for i in range(num_of_trips)] + ['Canton' for i in range(num_of_trips)]
@@ -132,8 +130,6 @@ def add_red_line(period = 8, speed = 20, earliest_hour = 8, latest_hour = 10):
     stop_times['stop_id'] = stop_id
     stop_times['stop_sequence'] = stop_sequence
 
-
-    # TODO: correct the folder path
     folder_path = 'redline/'
     os.makedirs(folder_path, exist_ok=True)
 
