@@ -9,7 +9,7 @@ def impedance(time, thresh):
 modes = ['transit_current', 'red_line']
 time_col = {'transit_current': 'travel_time_before', 'red_line': 'travel_time_after'}
 
-def compute_job_accessibility(travel_time, job_totals, seg, assumed_train_speed, min_thresh, max_thresh, thresh_step):
+def compute_job_accessibility(travel_time, job_totals, seg, assumed_train_speed, min_thresh, max_thresh, thresh_step, date):
 
     df = job_totals.merge(travel_time, left_on="w_geocode", right_on="to_id")
 
@@ -24,24 +24,25 @@ def compute_job_accessibility(travel_time, job_totals, seg, assumed_train_speed,
 
             final_df = below_df[['h_geocode', 'job_totals', 'gravity']].groupby('h_geocode').sum()
 
-            dir_path = processed_path + f"job_accessibility/{seg}/{int(assumed_train_speed)}/{mode}"
+            dir_path = processed_path + f"job_accessibility/{seg}/{int(assumed_train_speed)}/{mode}/{date}"
 
             os.makedirs(dir_path, exist_ok=True)
 
             final_df.to_csv(f"{dir_path}/{int(thresh)}.csv")
 
 
-transit_time = pd.read_csv('processed_data/travel_time_matrices/2023-02-08_travel_time.csv')
+date = '2023-03-06'
+transit_time = pd.read_csv(f'processed_data/travel_time_matrices/{date}_travel_time.csv')
 transit_time = transit_time.fillna(9999)
 
 job_totals = pd.read_csv('processed_data/job_totals_tract_S000.csv')
 seg = 'S000'
 speed = 0
-min_thresh = 15
-max_thresh = 90
+min_thresh = 30
+max_thresh = 45
 thresh_step = 15
 
 
 compute_job_accessibility(transit_time, job_totals, seg, speed,
-                          min_thresh=min_thresh, max_thresh=max_thresh,
-                          thresh_step=thresh_step)
+                          min_thresh, max_thresh,
+                          thresh_step, date)

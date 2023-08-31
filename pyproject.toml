@@ -15,6 +15,9 @@ numpy = "^1.25.2"
 r5py = "^0.1.0"
 tqdm = "^4.66.1"
 pyyaml = "^6.0.1"
+matplotlib = "^3.7.2"
+folium = "^0.14.0"
+mapclassify = "^2.6.0"
 
 
 [tool.poetry.group.dev.dependencies]
