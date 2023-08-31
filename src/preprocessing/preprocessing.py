@@ -3,16 +3,15 @@ import pandas as pd
 import os
 import yaml
 
-# TODO: add the inputs to the function into the config file
-
 with open('src/preprocessing/configs/config.yaml', "r") as f:
     config = yaml.load(f, Loader=yaml.FullLoader)
 
 raw_data_path = config["raw_data_path"]
 processed_data_path = config["processed_data_path"]
 bus_accurate_data_path = config["bus_data_path"]
-date_range = [datetime.date(2023, 1, 1), datetime.date(2023, 2, 7)]
-hour_range = [8, 10]
+
+date_range = [config["begin_date"], config["end_date"]]
+hour_range = [config["begin_hour"], config["end_hour"]]
 
 
 class filterTool:
