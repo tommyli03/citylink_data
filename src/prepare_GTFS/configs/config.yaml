@@ -1,5 +1,4 @@
 block_group_shapefile: tl_2020_24_tabblock20.shp
-transit_land_GTFS_link: https://transit.land/api/v2/rest/feed_versions/8523f088e05dcd273b369dd4d65eb771c73c0a22/download?apikey=T2Jljq0EQqqe1JMfijkn3RdtVxoYpwuq
 home_csv: md_rac_S000_JT00_2020.csv.gz
 work_csv: md_wac_S000_JT00_2020.csv.gz
 bus_accurate_csv: bus_accurate_data.csv

@@ -14,15 +14,17 @@ def cumulativeSum(lst):
 with open('src/prepare_GTFS/configs/config.yaml', "r") as f:
     config = yaml.load(f, Loader=yaml.FullLoader)
 
+raw_data_path = config["raw_data_path"]
+
 # TODO: add the inputs to the function into the config file
 
 def add_red_line(period, speed, earliest_hour, latest_hour):
 
     num_of_trips = int((latest_hour - earliest_hour) * 60 / period)
 
-    stations = gpd.read_file(f'{config["raw_data_path"]}Baltimore Red Line- Stations.csv', crs=4326)
+    stations = gpd.read_file(f'{raw_data_path}Baltimore Red Line- Stations.csv', crs=4326)
 
-    segments = gpd.read_file(f'{config["raw_data_path"]}Baltimore Red Line- Alignment.csv', crs=4326)
+    segments = gpd.read_file(f'{raw_data_path}Baltimore Red Line- Alignment.csv', crs=4326)
 
     res = segments.apply(lambda x: [y for y in x['geometry'].coords], axis=1).loc[0]
 

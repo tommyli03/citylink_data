@@ -1,9 +1,19 @@
 import datetime
 import pandas as pd
 import os
+import yaml
 
-# TODO: correct all the paths
 # TODO: add the inputs to the function into the config file
+
+with open('src/preprocessing/configs/config.yaml', "r") as f:
+    config = yaml.load(f, Loader=yaml.FullLoader)
+
+raw_data_path = config["raw_data_path"]
+processed_data_path = config["processed_data_path"]
+bus_accurate_data_path = config["bus_data_path"]
+date_range = [datetime.date(2023, 1, 1), datetime.date(2023, 2, 7)]
+hour_range = [8, 10]
+
 
 class filterTool:
 
@@ -53,10 +63,12 @@ class filterTool:
 
         return trip_data
 
+
+
 def preprocess_observed_bus_times(bus_data_csv_path: str,
                                   date_range: list[datetime.date] = [], hour_range: list[int] = []):
 
-    observed_times_df = pd.read_csv(bus_data_csv_path)
+    observed_times_df = pd.read_csv(raw_data_path + bus_data_csv_path)
     try:
         observed_times_df.rename(columns={'vehicle_stop_id': 'stop_id'}, inplace=True)
     except:
@@ -72,18 +84,18 @@ def preprocess_observed_bus_times(bus_data_csv_path: str,
     
     observed_mask = observed_times_df['observed_visit_time'].notna()
     observed_times_df.loc[observed_mask, ['observed_visit_time']] = \
-        pd.to_datetime(observed_times_df['observed_visit_time'][observed_mask]).dt.strftime('%H:%M:%S')
+        pd.to_datetime(observed_times_df['observed_visit_time'][observed_mask], format='mixed').dt.strftime('%H:%M:%S')
     
     observed_times_df = observed_times_df[['trip_id', 'stop_id', 'date', 'observed_visit_time', 
                                                 'scheduled_visit_time', 'trip_distance_traveled']]
 
-    os.makedirs('processed_data', exist_ok=True)  
-    observed_times_df.to_csv(f'processed_data/{bus_data_csv_path}', index=False)
+    os.makedirs(processed_data_path, exist_ok=True)  
+    observed_times_df.to_csv(processed_data_path + bus_data_csv_path, index=False)
 
 
 if __name__ == "__main__":
     preprocess_observed_bus_times(
-        'processed_data/bus_accurate_data.csv',
-        [datetime.date(2023, 2, 8), datetime.date(2023, 4, 25)],
-        [7, 10]
+        bus_accurate_data_path,
+        date_range,
+        hour_range
     )

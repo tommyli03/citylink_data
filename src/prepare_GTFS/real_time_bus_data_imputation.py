@@ -9,9 +9,12 @@ from src.prepare_GTFS.util import *
 # TODO: add bus_data_csv_path and gtfs_stop_times_path to the function into the config file
 with open('src/prepare_GTFS/configs/config.yaml', "r") as f:
     config = yaml.load(f, Loader=yaml.FullLoader)
+
+raw_data_path = config["raw_data_path"]
 processed_data_path = config["processed_data_path"]
 bus_data_csv_path = f'{config["processed_data_path"]}{config["bus_accurate_csv"]}'
 gtfs_stop_times_path = f'{config["raw_data_path"]}{config["transitland_path"]}{config["stop_times_path"]}'
+transitland_path = config["transitland_path"]
 
 gtfs_stop_times = pd.read_csv(gtfs_stop_times_path)
 
@@ -22,7 +25,8 @@ for date in unique_dates:
     observed_times_by_date[date] = observed_times[observed_times['date'] == date]
 
 print("Imputing partially missing times:")
-os.makedirs('stop_times_temp', exist_ok=True)  
+stop_times_temp_path = f'{processed_data_path}stop_times_temp'
+os.makedirs(stop_times_temp_path, exist_ok=True)  
 file_paths = []
 for date, stop_times_df in tqdm(observed_times_by_date.items()):
     stop_times_df = gtfs_stop_times.merge(stop_times_df, on=['trip_id', 'stop_id'], how="left")
@@ -34,29 +38,29 @@ for date, stop_times_df in tqdm(observed_times_by_date.items()):
 
     stop_times_df.drop(columns=['date', 'scheduled_visit_time', 'observed_visit_time', 'trip_distance_traveled'], inplace=True)
 
-    stop_times_df.to_csv(f'stop_times_temp/{date}.txt', index=False)
+    stop_times_df.to_csv(f'{stop_times_temp_path}/{date}.txt', index=False)
     
     file_paths.append(f'{date}.txt')
 
 
 print("Imputing fully missing times:")
-updated_stop_times_folder = f"{config["processed_data_path"]}stop_times_updated"
+updated_stop_times_folder = f'{processed_data_path}stop_times_updated'
 os.makedirs(updated_stop_times_folder, exist_ok=True)  
 
 for file in tqdm(file_paths):
-    df = pd.read_csv(f'stop_times_temp/{file}')
+    df = pd.read_csv(f'{stop_times_temp_path}/{file}')
     trip_ids_to_replace = df.loc[df.arrival_time.isna()].trip_id.unique()
     for trip_id in trip_ids_to_replace:
         new_data = impute_full_times(trip_id, file_paths)
         df = df.loc[df.trip_id != trip_id]
-        df = df.append(new_data)
+        df = pd.concat([df, new_data], ignore_index=True)
     df.to_csv(f'{updated_stop_times_folder}/{file}', index=False)
 
-shutil.rmtree(f'{config["processed_data_path"]}stop_times_temp/')
+shutil.rmtree(stop_times_temp_path)
 
-transitland_folder = f'{config["raw_data_path"]}{config["transitland_path"]}'
-copy_folder = f'{config["raw_data_path"]}transitland_copy/'
-zipfiles_folder = f'{config["processed_data_path"]}updated_gtfs'
+transitland_folder = f'{raw_data_path}{transitland_path}'
+copy_folder = f'{raw_data_path}transitland_copy/'
+zipfiles_folder = f'{processed_data_path}updated_gtfs'
 os.makedirs(zipfiles_folder, exist_ok=True)  
 
 print("Creating GTFS zip files:")
