@@ -1,9 +1,0 @@
-raw_data_path: raw_data/
-processed_data_path: processed_data/
-bus_data_path: bus_accurate_data.csv
-
-begin_date: 2023-01-01
-end_date: 2023-02-07
-
-begin_hour: 8
-end_hour: 10

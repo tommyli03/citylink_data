@@ -1,20 +1,18 @@
 import pandas as pd
-import yaml
 import os
 from tqdm import tqdm
 import shutil
 from src.prepare_GTFS.util import *
+from src.util import get_config
 
-# TODO: correct all the paths
-# TODO: add bus_data_csv_path and gtfs_stop_times_path to the function into the config file
-with open('src/prepare_GTFS/configs/config.yaml', "r") as f:
-    config = yaml.load(f, Loader=yaml.FullLoader)
+config = get_config()
 
 raw_data_path = config["raw_data_path"]
 processed_data_path = config["processed_data_path"]
-bus_data_csv_path = f'{config["processed_data_path"]}{config["bus_accurate_csv"]}'
-gtfs_stop_times_path = f'{config["raw_data_path"]}{config["transitland_path"]}{config["stop_times_path"]}'
+bus_data_csv_path = processed_data_path + config["bus_accurate_csv"]
 transitland_path = config["transitland_path"]
+transitland_folder = raw_data_path + transitland_path
+gtfs_stop_times_path = transitland_folder + config["stop_times_path"]
 
 gtfs_stop_times = pd.read_csv(gtfs_stop_times_path)
 
@@ -44,7 +42,7 @@ for date, stop_times_df in tqdm(observed_times_by_date.items()):
 
 
 print("Imputing fully missing times:")
-updated_stop_times_folder = f'{processed_data_path}stop_times_updated'
+updated_stop_times_folder = f'{processed_data_path}stop_times_updated/'
 os.makedirs(updated_stop_times_folder, exist_ok=True)  
 
 for file in tqdm(file_paths):
@@ -54,20 +52,19 @@ for file in tqdm(file_paths):
         new_data = impute_full_times(trip_id, file_paths)
         df = df.loc[df.trip_id != trip_id]
         df = pd.concat([df, new_data], ignore_index=True)
-    df.to_csv(f'{updated_stop_times_folder}/{file}', index=False)
+    df.to_csv(updated_stop_times_folder + file, index=False)
 
 shutil.rmtree(stop_times_temp_path)
 
-transitland_folder = f'{raw_data_path}{transitland_path}'
 copy_folder = f'{raw_data_path}transitland_copy/'
-zipfiles_folder = f'{processed_data_path}updated_gtfs'
-os.makedirs(zipfiles_folder, exist_ok=True)  
+bus_gtfs_folder = f'{processed_data_path}updated_gtfs'
+os.makedirs(bus_gtfs_folder, exist_ok=True)  
 
 print("Creating GTFS zip files:")
 
-for filename in tqdm(os.listdir(updated_stop_times_folder)):
+for gfts_filename in tqdm(os.listdir(updated_stop_times_folder)):
     shutil.copytree(transitland_folder, copy_folder)
-    times = pd.read_csv(f"{updated_stop_times_folder}/{filename}")
+    times = pd.read_csv(updated_stop_times_folder + gfts_filename)
     trips = pd.read_csv(f'{copy_folder}trips.txt')
 
     unique_trip_ids = times['trip_id'].unique()
@@ -84,8 +81,8 @@ for filename in tqdm(os.listdir(updated_stop_times_folder)):
     routes.to_csv(f"{copy_folder}routes.txt", index=False)
     directions.to_csv(f"{copy_folder}directions.txt", index=False)
 
-    zip_filename = f'{os.path.splitext(filename)[0]}'
-    zip_path = os.path.join(zipfiles_folder, zip_filename)
+    gfts_filename = f'{os.path.splitext(gfts_filename)[0]}'
+    zip_path = os.path.join(bus_gtfs_folder, gfts_filename)
     shutil.make_archive(zip_path, 'zip', copy_folder)
     shutil.rmtree(copy_folder)
 

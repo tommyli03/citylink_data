@@ -1,10 +1,9 @@
 import datetime
 import pandas as pd
 import os
-import yaml
+from src.util import get_config
 
-with open('src/preprocessing/configs/config.yaml', "r") as f:
-    config = yaml.load(f, Loader=yaml.FullLoader)
+config = get_config()
 
 raw_data_path = config["raw_data_path"]
 processed_data_path = config["processed_data_path"]

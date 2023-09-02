@@ -6,13 +6,12 @@ import time
 import os
 import shutil
 from itertools import accumulate
-import yaml
+from src.util import get_config
 
 def cumulativeSum(lst):
     return list(accumulate(lst))
 
-with open('src/prepare_GTFS/configs/config.yaml', "r") as f:
-    config = yaml.load(f, Loader=yaml.FullLoader)
+config = get_config()
 
 raw_data_path = config["raw_data_path"]
 
