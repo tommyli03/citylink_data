@@ -1,7 +1,13 @@
-block_group_shapefile: tl_2020_24_tabblock20.shp
-home_csv: md_rac_S000_JT00_2020.csv.gz
-work_csv: md_wac_S000_JT00_2020.csv.gz
+block_group_shapefile_path: block_group/tl_2020_24_tabblock20.shp
+rac_file_path: md_rac_S000_JT00_2020.csv.gz
+wac_file_path: md_wac_S000_JT00_2020.csv.gz
+osm_path: maryland-latest.osm.pbf
+
 bus_accurate_csv: bus_accurate_data.csv
+begin_date: 2023-01-01
+end_date: 2023-02-07
+begin_hour: 8
+end_hour: 10
 
 api_key: T2Jljq0EQqqe1JMfijkn3RdtVxoYpwuq
 bus_feed_link: 8523f088e05dcd273b369dd4d65eb771c73c0a22

@@ -1,14 +1,15 @@
 import os
-import pandas as pd
 import datetime
+from src.util import config
 from travel_time_computation import compute_travel_time_matrices
 
-# TODO: add the inputs to the function into the config file
-shapefile_path = 'raw_data/block_group/tl_2020_24_tabblock20.shp'
-md_rac_path = 'raw_data/md_rac_S000_JT00_2020.csv.gz'
-md_wac_path = 'raw_data/md_wac_S000_JT00_2020.csv.gz'
-# Filepath to OSM data
-osm_fp = "raw_data/maryland-latest.osm.pbf"
+config = config.get_config()
+
+raw_data_path = config['raw_data_path']
+block_group_shapefile_path = raw_data_path + config['block_group_shapefile_path']
+md_rac_path = raw_data_path + config['rac_file_path']
+md_wac_path = raw_data_path +  + config['wac_file_path']
+osm_path = raw_data_path + config['osm_path']
 # Filepath to GTFS data
 date = "2023-03-06"
 departure_time = datetime.datetime(2023, 3, 6, 8, 30)
@@ -25,10 +26,10 @@ wait_minutes = 30
 
 from prepare_data import prepare_data_Baltimore
 
-md_rac_df, md_wac_df = prepare_data_Baltimore(shapefile_path, md_rac_path, md_wac_path)
+md_rac_df, md_wac_df = prepare_data_Baltimore(block_group_shapefile_path, md_rac_path, md_wac_path)
 
 matrix_before_redline, matrix_after_redline = \
-    compute_travel_time_matrices(md_rac_df, md_wac_df, departure_time, osm_fp, GTFS, redline, wait_minutes=wait_minutes)
+    compute_travel_time_matrices(md_rac_df, md_wac_df, departure_time, osm_path, GTFS, redline, wait_minutes=wait_minutes)
 
 os.makedirs('processed_data/travel_time_matrices', exist_ok=True)
 matrix_before_redline.to_csv(f"processed_data/travel_time_matrices/{date}_before_redline.csv", index = False)
