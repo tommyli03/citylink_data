@@ -24,6 +24,12 @@ exit
      - [ ] input to important functions
 - [ ] Fix Red Line route.txt (see TODO's in the python code)
 - [ ] Add GTFS for multiple transit modes
+- [ ] Links:
+     - [ ] Bus GTFS: (https://www.transit.land/feeds/f-dq-mtamaryland~bus/versions/8523f088e05dcd273b369dd4d65eb771c73c0a22)
+     - [ ] LightRail GTFS: (https://www.transit.land/feeds/f-dq-mtamaryland~raillink/versions/c4233b29806296fc80209881fd9cec6c49fd9380)
+     - [ ] CommuterBus GTFS: (https://www.transit.land/feeds/f-dq-mtamaryland~commuterbus/versions/6cc96d82827a3dfb39807521ad8a77cf8d77b368)
+     - [ ] Train GTFS: (https://www.transit.land/feeds/f-dq-mtamaryland~marc/versions/32c1ab0bebce48f0f58a8110ebe245ccb5008930)
+     - [ ] Subway GTFS: (https://www.transit.land/feeds/f-dq-mtamaryland~subwaylink/versions/9b0a275f899fcb67a9d2107be8b9976326507a35)
 
 ### Xinyu 
 - [ ] Downstream Accessibility Calculation
