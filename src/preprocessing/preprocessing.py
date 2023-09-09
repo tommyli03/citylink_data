@@ -1,5 +1,6 @@
 import datetime
 import pandas as pd
+import pytz
 import os
 from src.util import get_config
 
@@ -7,7 +8,7 @@ config = get_config()
 
 raw_data_path = config["raw_data_path"]
 processed_data_path = config["processed_data_path"]
-bus_accurate_data_path = config["bus_data_path"]
+bus_accurate_data_path = config["bus_new_data"]
 
 date_range = [config["begin_date"], config["end_date"]]
 hour_range = [config["begin_hour"], config["end_hour"]]
@@ -62,7 +63,6 @@ class filterTool:
         return trip_data
 
 
-
 def preprocess_observed_bus_times(bus_data_csv_path: str,
                                   date_range: list[datetime.date] = [], hour_range: list[int] = []):
 
@@ -72,6 +72,10 @@ def preprocess_observed_bus_times(bus_data_csv_path: str,
     except:
         pass
     
+    # Apply the function to the DataFrame
+    observed_times_df['observed_visit_time'] = pd.to_datetime(observed_times_df['observed_visit_time'], format='%Y-%m-%d %H:%M:%S.%f %Z')
+    observed_times_df['scheduled_visit_time'] = pd.to_datetime(observed_times_df['scheduled_visit_time'], format='%Y-%m-%d %H:%M:%S.%f %Z')
+
     observed_times_df['scheduled_visit_time'] = pd.to_datetime(observed_times_df['scheduled_visit_time'])
     observed_times_df['date'] = observed_times_df['scheduled_visit_time'].dt.date
 
