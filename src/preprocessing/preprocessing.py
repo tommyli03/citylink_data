@@ -1,6 +1,6 @@
 import datetime
 import pandas as pd
-import re
+import pytz
 import os
 from src.util import get_config
 
@@ -77,14 +77,13 @@ def preprocess_observed_bus_times(bus_data_csv_path: str,
     observed_times_df['scheduled_visit_time'] = pd.to_datetime(observed_times_df['scheduled_visit_time'], format='%Y-%m-%d %H:%M:%S.%f %Z')
 
     observed_times_df['scheduled_visit_time'] = pd.to_datetime(observed_times_df['scheduled_visit_time'])
-    observed_times_df['observed_visit_time'] = pd.to_datetime(observed_times_df['observed_visit_time'])
     observed_times_df['date'] = observed_times_df['scheduled_visit_time'].dt.date
 
     filter_tool = filterTool(date_range, hour_range)
     observed_times_df = filter_tool.filter_data(observed_times_df)
     
     observed_times_df['scheduled_visit_time'] = observed_times_df['scheduled_visit_time'].dt.strftime('%H:%M:%S')
-    observed_times_df['observed_visit_time'] = observed_times_df['observed_visit_time'].dt.strftime('%H:%M:%S')
+    
     observed_mask = observed_times_df['observed_visit_time'].notna()
     observed_times_df.loc[observed_mask, ['observed_visit_time']] = \
         pd.to_datetime(observed_times_df['observed_visit_time'][observed_mask], format='mixed').dt.strftime('%H:%M:%S')
