@@ -9,7 +9,7 @@ config = get_config()
 
 raw_data_path = config["raw_data_path"]
 processed_data_path = config["processed_data_path"]
-bus_data_csv_path = processed_data_path + config["bus_accurate_csv"]
+bus_data_csv_path = processed_data_path + config["bus_new_data"]
 transitland_path = config["transitland_path"]
 transitland_folder = raw_data_path + transitland_path
 gtfs_stop_times_path = transitland_folder + config["stop_times_path"]
@@ -17,6 +17,8 @@ gtfs_stop_times_path = transitland_folder + config["stop_times_path"]
 gtfs_stop_times = pd.read_csv(gtfs_stop_times_path)
 
 observed_times = pd.read_csv(bus_data_csv_path)
+# observed_times['observed_visit_time'] = pd.to_datetime(observed_times['observed_visit_time'], format='%Y-%m-%d %H:%M:%S.%f %Z')
+# observed_times['scheduled_visit_time'] = pd.to_datetime(observed_times['scheduled_visit_time'], format='%Y-%m-%d %H:%M:%S.%f %Z')
 unique_dates = observed_times['date'].unique()
 observed_times_by_date = {}
 for date in unique_dates:

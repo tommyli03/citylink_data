@@ -4,7 +4,7 @@ config = get_config()
 
 download_dir = config["raw_data_path"]
 api_key = config["api_key"]
-bus_feed_link = config["bus_feed_new_april19_june17"]
+bus_feed_link = config["bus_feed_link"]
 rail_feed_link = config["rail_feed_link"]
 subway_feed_link = config["subway_feed_link"]
 commuterbus_feed_link = config["commuterbus_feed_link"]
