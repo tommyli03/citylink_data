@@ -5,8 +5,8 @@ osm_path: maryland-latest.osm.pbf
 
 bus_accurate_csv: bus_accurate_data.csv
 bus_new_data: a37cf1bc-8197-47e5-9c95-e166b06b2566.csv
-begin_date: 2023-01-01
-end_date: 2023-04-23
+begin_date: 2023-03-06
+end_date: 2023-03-06
 begin_hour: 8
 end_hour: 10
 
