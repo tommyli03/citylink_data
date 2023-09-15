@@ -31,7 +31,7 @@ def compute_job_accessibility(travel_time, job_totals, seg, assumed_train_speed,
             final_df.to_csv(f"{dir_path}/{int(thresh)}.csv")
 
 
-date = '2023-04-04'
+date = '2023-05-31'
 transit_time = pd.read_csv(f'processed_data/travel_time_matrices/{date}_travel_time.csv')
 transit_time = transit_time.fillna(9999)
 

@@ -41,7 +41,7 @@ while current_date <= end_date:
         # Filepath to newline GTFS data
         redline = "processed_data/redline.zip"
 
-        wait_minutes = 30
+        wait_minutes = 10
 
         from prepare_data import prepare_data_Baltimore
 
@@ -51,9 +51,13 @@ while current_date <= end_date:
             compute_travel_time_matrices(md_rac_df, md_wac_df, departure_time, osm_path, GTFS, redline, wait_minutes=wait_minutes)
 
         os.makedirs('processed_data/travel_time_matrices', exist_ok=True)
-        matrix_before_redline.to_csv(f"processed_data/travel_time_matrices/{date}_before_redline.csv", index = False)
-        matrix_after_redline.to_csv(f"processed_data/travel_time_matrices/{date}_after_redline.csv", index = False)
+        #matrix_before_redline.to_csv(f"processed_data/travel_time_matrices/{date}_before_redline.csv", index = False)
+        #matrix_after_redline.to_csv(f"processed_data/travel_time_matrices/{date}_after_redline.csv", index = False)
 
         travel_time = matrix_before_redline.merge(matrix_after_redline, on=['from_id', 'to_id'], suffixes=('_before', '_after'))
 
+        # filter out rows where travel time after is nan
+        travel_time = travel_time[~travel_time['travel_time_after'].isna()]
+        # filter out rows where travel time, both before or after, are greater than 90 minutes
+        travel_time = travel_time[(travel_time['travel_time_before'] <= 90) | (travel_time['travel_time_after'] <= 90)]
         travel_time.to_csv(f"processed_data/travel_time_matrices/{date}_travel_time.csv", index = False)
