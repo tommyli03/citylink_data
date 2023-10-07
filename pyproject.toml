@@ -20,6 +20,7 @@ folium = "^0.14.0"
 mapclassify = "^2.6.0"
 census = "^0.8.20"
 us = "^3.1.1"
+selenium = "^4.13.0"
 
 
 [tool.poetry.group.dev.dependencies]
