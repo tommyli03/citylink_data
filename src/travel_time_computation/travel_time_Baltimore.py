@@ -1,6 +1,7 @@
 import os
 from datetime import datetime, timedelta
 from src.util import get_config
+from prepare_data import prepare_data_Baltimore
 from travel_time_computation import compute_travel_time_matrices
 
 config = get_config()
@@ -43,8 +44,6 @@ while current_date <= end_date:
 
         wait_minutes = 10
 
-        from prepare_data import prepare_data_Baltimore
-
         md_rac_df, md_wac_df = prepare_data_Baltimore(block_group_shapefile_path, md_rac_path, md_wac_path)
 
         matrix_before_redline, matrix_after_redline = \
@@ -61,3 +60,4 @@ while current_date <= end_date:
         # filter out rows where travel time, both before or after, are greater than 90 minutes
         travel_time = travel_time[(travel_time['travel_time_before'] <= 90) | (travel_time['travel_time_after'] <= 90)]
         travel_time.to_csv(f"processed_data/travel_time_matrices/{date}_travel_time.csv", index = False)
+        exit()

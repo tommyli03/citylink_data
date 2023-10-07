@@ -1,7 +1,6 @@
 import pandas as pd
 import os
 from itertools import accumulate
-import requests
 from src.util import download_file
 
 def get_lodes_file(raw_path, lodes_type, file_name):
@@ -35,7 +34,6 @@ def extract_tract_FIPS(df, col):
 
 def column_to_str(df, col):
     return df[col].astype(str)
-
 
 def cumulativeSum(lst):
     return list(accumulate(lst))

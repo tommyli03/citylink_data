@@ -93,7 +93,7 @@ def add_red_line(period, speed, earliest_hour, latest_hour):
 
     trips['route_id'] = [99999 for i in range(num_of_trips * 2)]
 
-    trips['service_id'] = 1911
+    trips['service_id'] = 201
     trips['trip_id'] = [i + 1 for i in range(num_of_trips * 2)]
     trips['trip_headsign'] = ['Centers for Medicare and Medicaid Services' for i in range(num_of_trips)] + ['Canton' for i in range(num_of_trips)]
     trips['direction_id'] = [0 for i in range(num_of_trips)] + [1 for i in range(num_of_trips)]
@@ -144,7 +144,7 @@ def add_red_line(period, speed, earliest_hour, latest_hour):
     stop_times.to_csv(f"{folder_path}stop_times.txt", index = False)
 
     folder_path_to_zip = "./redline"
-    output_zip_path = "redline"
+    output_zip_path = "processed_data/redline"
 
     shutil.make_archive(output_zip_path, 'zip', folder_path_to_zip)
 

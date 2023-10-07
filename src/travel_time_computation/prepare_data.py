@@ -35,7 +35,7 @@ def prepare_data_Baltimore(shapefile_path, md_rac_path, md_wac_path):
 
     gdf_Baltimore.loc[:,'GEOID20'] = gdf_Baltimore['GEOID20'].astype(int)
 
-    md_rac_df = restrict_to_BaltimoreCity(pd.read_csv(md_rac_path), block_gdf, 'h_geocode')
-    md_wac_df = restrict_to_BaltimoreCity(pd.read_csv(md_wac_path), block_gdf, 'w_geocode')
+    md_rac_df = restrict_to_BaltimoreCity(pd.read_csv(md_rac_path), gdf_Baltimore, 'h_geocode')
+    md_wac_df = restrict_to_BaltimoreCity(pd.read_csv(md_wac_path), gdf_Baltimore, 'w_geocode')
 
     return md_rac_df, md_wac_df
