@@ -58,7 +58,7 @@ exit
 ├── raw_data
 │   ├── Baltimore Red Line- Alignment.csv
 │   ├── Baltimore Red Line- Stations.csv
-│   ├── block_group
+│   ├── blocks
 │   │   ├── tl_2020_24_tabblock20.cpg
 │   │   ├── tl_2020_24_tabblock20.dbf
 │   │   ├── tl_2020_24_tabblock20.prj

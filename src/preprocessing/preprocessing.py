@@ -1,6 +1,5 @@
 import datetime
 import pandas as pd
-import pytz
 import os
 from src.util import get_config
 

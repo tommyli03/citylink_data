@@ -1,11 +1,11 @@
-block_group_shapefile_path: block_group/tl_2020_24_tabblock20.shp
+blocks_shapefile_path: blocks/tl_2020_24_tabblock20.shp
 rac_file_path: md_rac_S000_JT00_2020.csv.gz
 wac_file_path: md_wac_S000_JT00_2020.csv.gz
 osm_path: maryland-latest.osm.pbf
 
 bus_accurate_csv: bus_accurate_data.csv
 bus_new_data: a37cf1bc-8197-47e5-9c95-e166b06b2566.csv
-begin_date: 2023-04-01
+begin_date: 2023-04-23
 end_date: 2023-05-31
 begin_hour: 8
 end_hour: 10
@@ -26,7 +26,7 @@ train_start_end: 11-14-2022, 12-31-2023
 
 raw_data_path: raw_data/
 processed_data_path: processed_data/
-transitland_path: transitland/
+transitland_bus_path: transitland_bus/
 stop_times_path: stop_times.txt
 
 period: 8
