@@ -5,7 +5,9 @@ import folium
 from census import Census
 from us import states
 
+# Census Data API: Variables in /data/2021/acs/acs5/variables https://api.census.gov/data/2021/acs/acs5/variables.html
 c = Census("93c3297165ad8b5b6c81e0ed9e2e44a38e56224f")
+
 
 def load_LODES_data(path, geocode_col):
     df = pd.read_csv(path)
@@ -84,7 +86,7 @@ def get_poverty_gdf(stations):
     baltimore_merge = cencus_blocks_groups.merge(baltimore_df, on = "GEOID")
 
     # We use ratio of income to poverty in the past 12 months (C17002_001E, total; C17002_002E, < 0.50; and C17002_003E, 0.50 - 0.99) variables and the total population (B01003_001E) variable.
-    baltimore_poverty_tract = baltimore_merge[["GEOID", "geometry", "C17002_001E", "C17002_002E", "C17002_003E", "B01003_001E"]]
-    baltimore_poverty_tract = baltimore_poverty_tract[baltimore_poverty_tract['B01003_001E'] > 0]
-    baltimore_poverty_tract["Poverty_Rate"] = (baltimore_poverty_tract["C17002_002E"] + baltimore_poverty_tract["C17002_003E"]) / baltimore_poverty_tract["B01003_001E"] * 100
-    return baltimore_poverty_tract
+    baltimore_poverty_bg = baltimore_merge[["GEOID", "geometry", "C17002_001E", "C17002_002E", "C17002_003E", "B01003_001E"]]
+    baltimore_poverty_bg = baltimore_poverty_bg[baltimore_poverty_bg['B01003_001E'] > 0]
+    baltimore_poverty_bg["Poverty_Rate"] = (baltimore_poverty_bg["C17002_002E"] + baltimore_poverty_bg["C17002_003E"]) / baltimore_poverty_bg["B01003_001E"] * 100
+    return baltimore_poverty_bg

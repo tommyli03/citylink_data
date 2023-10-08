@@ -675,6 +675,23 @@ requests = ["requests (>=2.16.2)", "urllib3 (>=1.24.2)"]
 timezone = ["pytz"]
 
 [[package]]
+name = "gtfsutils"
+version = "0.0.5"
+description = "GTFS command-line tool and Python GTFS utility library"
+optional = false
+python-versions = "*"
+files = [
+    {file = "gtfsutils-0.0.5-py3-none-any.whl", hash = "sha256:5143ef53c9daf74080c5ab25f79e755e4c64407a1e0d01e9b0de92fd180a5116"},
+    {file = "gtfsutils-0.0.5.tar.gz", hash = "sha256:96d4abd5f653087108dedce38cda62818abd3956e2d5129e144c470f1e82e8d4"},
+]
+
+[package.dependencies]
+geopandas = "*"
+numpy = "*"
+pandas = "*"
+shapely = "*"
+
+[[package]]
 name = "h11"
 version = "0.14.0"
 description = "A pure-Python, bring-your-own-I/O implementation of HTTP/1.1"
@@ -2324,4 +2341,4 @@ h11 = ">=0.9.0,<1"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "ea667f636a80dffbe567d36de3b4c3548facc2fad5879ccb26f9205d8afa08b7"
+content-hash = "7aa8444be7824d24faaf0be698d258597c97c6e4020d7f376f71c768b312ef9b"
