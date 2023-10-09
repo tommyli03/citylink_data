@@ -36,7 +36,7 @@ if __name__ == "__main__":
                 # Compute the median & quantile job accessibility for each h_geocode
 
                 accessibility_df['median'] = all_data.groupby('h_geocode')['accessibility'].median()
-                accessibility_df['5'] = all_data.groupby('h_geocode')['accessibility'].quantile(0.05)
-                accessibility_df['95'] = all_data.groupby('h_geocode')['accessibility'].quantile(0.95)
+                accessibility_df['75'] = all_data.groupby('h_geocode')['accessibility'].quantile(0.75)
+                accessibility_df['25'] = all_data.groupby('h_geocode')['accessibility'].quantile(0.25)
 
                 accessibility_df.to_csv(processed_path + f'job_accessibility/{job_type}/{mode}_{thresh}_accessibility.csv')

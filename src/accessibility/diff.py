@@ -39,7 +39,7 @@ if __name__ == "__main__":
 
             diff_df = pd.DataFrame()
             diff_df['median'] = all_data.groupby('h_geocode')['diff'].median()
-            diff_df['5'] = all_data.groupby('h_geocode')['diff'].quantile(0.05)
-            diff_df['95'] = all_data.groupby('h_geocode')['diff'].quantile(0.95)
+            diff_df['25'] = all_data.groupby('h_geocode')['diff'].quantile(0.25)
+            diff_df['75'] = all_data.groupby('h_geocode')['diff'].quantile(0.75)
 
             diff_df.to_csv(processed_path + f'job_accessibility/{job_type}/{thresh}_diff.csv')
