@@ -64,7 +64,7 @@ def get_service_area(gdf_Baltimore: gpd.GeoDataFrame, stations: gpd.GeoDataFrame
     union_buffer = unary_union(buf)
     return gdf_Baltimore[gdf_Baltimore.intersects(union_buffer)]
 
-def get_Baltimore_city_map(stations = None, segments = None, zoom_start=13):
+def get_Baltimore_city_map(stations = None, segments = None, zoom_start=13, location=[39.299236, -76.609383]):
     city_map = folium.Map(location=[39.299236, -76.609383], zoom_start=zoom_start)
     
     if stations is not None:
@@ -77,7 +77,7 @@ def get_Baltimore_city_map(stations = None, segments = None, zoom_start=13):
     if segments is not None:
         folium.PolyLine(
             locations=[(lat, lon) for lon, lat in segments['geometry'][0].coords],
-            color='red',  # Change the color to blue
+            color='red',
             weight=6,         # Adjust the line thickness
             opacity=1,      # Adjust the opacity
             dash_array='5, 10'
