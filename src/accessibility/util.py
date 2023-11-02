@@ -59,7 +59,7 @@ def get_service_area(gdf_Baltimore: gpd.GeoDataFrame, stations: gpd.GeoDataFrame
     stations.crs = "NAD83"
     stations = stations.to_crs(26985)
 
-    buf = stations.buffer(distance = 2640)
+    buf = stations.buffer(distance = 1320)
     buf = buf.to_crs("NAD83")
     union_buffer = unary_union(buf)
     return gdf_Baltimore[gdf_Baltimore.intersects(union_buffer)]

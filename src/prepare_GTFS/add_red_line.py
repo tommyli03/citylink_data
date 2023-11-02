@@ -7,15 +7,21 @@ import os
 import shutil
 from itertools import accumulate
 from src.util import get_config
+from scipy.spatial.distance import cdist
 
 def cumulativeSum(lst):
     return list(accumulate(lst))
 
+def matching(x, y):
+    distances = cdist(x, y, metric='euclidean')
+
+    # Find the index of the closest vector in y for each vector in x
+    closest_indices = np.argmin(distances, axis=1)
+    return closest_indices
+
 config = get_config()
 
 raw_data_path = config["raw_data_path"]
-
-# TODO: add the inputs to the function into the config file
 
 def add_red_line(period, speed, earliest_hour, latest_hour):
 
@@ -44,32 +50,30 @@ def add_red_line(period, speed, earliest_hour, latest_hour):
     stations['lon'] = stations.geometry.x
     stations['lat'] = stations.geometry.y
 
-    stations = stations.sort_values(by=['lon'])
+    stations = stations.sort_values(by=['lon']).reset_index(drop=True)
 
     longitudes = stations['lon'].to_list()
     latitudes = stations['lat'].to_list()
 
-     # Compute distance traveled for the red line with respect to each station
-     # The distances don't add up to 14 miles exactly, because the stations are not ON THE RAIL LINE
-     # while we compute the distances using Euclidean distances
-     # but we believe the discrepancy is negligible
-    res = segments.apply(lambda x: [y for y in x['geometry'].coords if (y[0] < longitudes[-1] and y[0] > longitudes[0])], axis=1).loc[0]
-
     res = res + [(latitudes[-1], longitudes[-1])]
+
+    station_points = list(stations.apply(lambda x: x['geometry'].coords[0], axis=1))
+    # get all the break points of the segments
+    break_points = res
+    matches = matching(station_points, break_points)
 
     distance = 0
     distances = []
     coords_1 = (latitudes[0], longitudes[0])
     n = len(res)
     point = 0
-
-    for _, station in stations.iterrows():
+    for idx, station in stations.iterrows():
         station_y = station['lon']
         station_x = station['lat']
         while point < n:
-            y,x = res[point]
             point += 1
-            if(y < station_y):
+            y,x = res[point]
+            if point < matches[idx]:
                 coords_2 = (x, y)
                 distance += geodesic(coords_1, coords_2).miles
                 coords_1 = coords_2
@@ -83,7 +87,7 @@ def add_red_line(period, speed, earliest_hour, latest_hour):
 
     # Create dataframe for stops
     stops = pd.DataFrame()
-    stops['stop_id'] = list(stations.index)
+    stops['stop_id'] = list(stations.index + 1)
     stops['stop_name'] = stations['name']
     stops['stop_lat'] = stations['lat']
     stops['stop_lon'] = stations['lon']
@@ -95,7 +99,7 @@ def add_red_line(period, speed, earliest_hour, latest_hour):
 
     trips['service_id'] = 201
     trips['trip_id'] = [i + 1 for i in range(num_of_trips * 2)]
-    trips['trip_headsign'] = ['Centers for Medicare and Medicaid Services' for i in range(num_of_trips)] + ['Canton' for i in range(num_of_trips)]
+    trips['trip_headsign'] = ['Centers for Medicare and Medicaid Services' for i in range(num_of_trips)] + ['Bayview MARC' for i in range(num_of_trips)]
     trips['direction_id'] = [0 for i in range(num_of_trips)] + [1 for i in range(num_of_trips)]
     trips['shape_id'] = "RED"
 
@@ -116,7 +120,7 @@ def add_red_line(period, speed, earliest_hour, latest_hour):
         start_time = start + i * period * 60
         arrival_time = arrival_time + list(start_time + np.array(cumulativeSum(distances))/ speed * 60 * 60)
         trip_id = trip_id + [i + 1 for _ in range(len(stations))]
-        stop_id = stop_id + list(stations.index)
+        stop_id = stop_id + list(stations.index + 1)
         stop_sequence = stop_sequence + [k + 1 for k in range(len(stations))]
 
     trip_id = trip_id + list(num_of_trips + np.array(trip_id))
@@ -126,7 +130,7 @@ def add_red_line(period, speed, earliest_hour, latest_hour):
     for i in range(num_of_trips):
         start_time = start + i * period * 60
         arrival_time = arrival_time + list(start_time + np.array(cumulativeSum(reversed_distances))/ speed * 60 * 60)
-        stop_id = stop_id + list(stations.index)[::-1]
+        stop_id = stop_id + list(stations.index + 1)[::-1]
 
     stop_times['trip_id'] = trip_id
     stop_times['arrival_time'] = arrival_time

@@ -46,6 +46,7 @@ def compute_travel_time_matrices(origins, destinations, departure_time, osm_fp: 
             - The travel time matrix after the new transit line is added
     '''
 
+
     print("Preparing the transport network...")
 
     transport_network_before_newline = TransportNetwork(
@@ -53,10 +54,11 @@ def compute_travel_time_matrices(origins, destinations, departure_time, osm_fp: 
         GTFS
     )
 
+    print("Computing the travel time matrices...")
+
     origins["geometry"] = transport_network_before_newline.snap_to_network(origins["geometry"])
     destinations["geometry"] = transport_network_before_newline.snap_to_network(destinations["geometry"])
 
-    print("Computing the travel time matrices...")
     matrix_before_newline = compute_travel_time_matrix(origins, destinations, departure_time, transport_network_before_newline, wait_minutes)
 
     GTFS.append(newline)

@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from src.util import get_config
 from prepare_data import prepare_data_Baltimore
 from travel_time_computation import compute_travel_time_matrices
+import pandas as pd
 
 config = get_config()
 
@@ -23,6 +24,8 @@ step = timedelta(days=1)
 
 # Iterate through dates from begin_date to end_date
 current_date = begin_date
+
+md_rac_df, md_wac_df = prepare_data_Baltimore(blocks_shapefile_path, md_rac_path, md_wac_path)
 
 while current_date <= end_date:
 
@@ -46,13 +49,11 @@ while current_date <= end_date:
 
         wait_minutes = 10
 
-        md_rac_df, md_wac_df = prepare_data_Baltimore(blocks_shapefile_path, md_rac_path, md_wac_path)
-
         matrix_before_redline, matrix_after_redline = \
             compute_travel_time_matrices(md_rac_df, md_wac_df, departure_time, osm_path, GTFS_paths, redline, wait_minutes=wait_minutes)
 
         os.makedirs(f'{processed_data_path}/travel_time_matrices', exist_ok=True)
-
+        
         travel_time = matrix_before_redline.merge(matrix_after_redline, on=['from_id', 'to_id'], suffixes=('_before', '_after'))
 
         # filter out rows where travel time after is nan
