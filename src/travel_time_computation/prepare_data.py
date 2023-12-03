@@ -32,13 +32,9 @@ def set_geometry(gdf):
     return gdf
 
 
-def prepare_data_Baltimore(shapefile_path, md_rac_path, md_wac_path):
-    # Read in shapefile for block groups in Maryland
-    block_gdf = gpd.read_file(shapefile_path)
-    block_gdf = set_geometry(block_gdf)
-
-    #Restrict to Baltimore City
-    gdf_Baltimore = block_gdf[block_gdf['COUNTYFP20'] == '510']
+def prepare_data_Baltimore(md_rac_path, md_wac_path):
+    gdf_Baltimore = gpd.read_file("https://www2.census.gov/geo/tiger/TIGER2022/TABBLOCK20//tl_2022_24_tabblock20.zip")
+    gdf_Baltimore = gdf_Baltimore[gdf_Baltimore['COUNTYFP20'] == '510']
 
     gdf_Baltimore.loc[:,'GEOID20'] = gdf_Baltimore['GEOID20'].astype(int)
 

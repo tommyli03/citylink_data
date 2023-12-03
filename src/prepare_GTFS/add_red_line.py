@@ -22,6 +22,7 @@ def matching(x, y):
 config = get_config()
 
 raw_data_path = config["raw_data_path"]
+processed_data_path = config["processed_data_path"]
 
 def add_red_line(period, speed, earliest_hour, latest_hour):
 
@@ -148,7 +149,7 @@ def add_red_line(period, speed, earliest_hour, latest_hour):
     stop_times.to_csv(f"{folder_path}stop_times.txt", index = False)
 
     folder_path_to_zip = "./redline"
-    output_zip_path = "processed_data/redline"
+    output_zip_path = processed_data_path + "/redline"
 
     shutil.make_archive(output_zip_path, 'zip', folder_path_to_zip)
 

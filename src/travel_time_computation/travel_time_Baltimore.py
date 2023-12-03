@@ -8,7 +8,6 @@ import pandas as pd
 config = get_config()
 
 raw_data_path = config['raw_data_path']
-blocks_shapefile_path = raw_data_path + config['blocks_shapefile_path']
 md_rac_path = raw_data_path + config['rac_file_path']
 md_wac_path = raw_data_path + config['wac_file_path']
 osm_path = raw_data_path + config['osm_path']
@@ -25,7 +24,7 @@ step = timedelta(days=1)
 # Iterate through dates from begin_date to end_date
 current_date = begin_date
 
-md_rac_df, md_wac_df = prepare_data_Baltimore(blocks_shapefile_path, md_rac_path, md_wac_path)
+md_rac_df, md_wac_df = prepare_data_Baltimore(md_rac_path, md_wac_path)
 
 while current_date <= end_date:
 
