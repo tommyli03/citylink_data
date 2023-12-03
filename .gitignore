@@ -3,3 +3,4 @@ raw_data/
 output.zip
 .DS_Store
 __pycache__/
+.venv

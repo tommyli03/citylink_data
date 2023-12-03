@@ -1,31 +1,14 @@
 [tool.poetry]
-name = "citylink-analysis"
+name = "src"
 version = "0.1.0"
 description = ""
 authors = ["Yangxinyu <xinyux@wharton.upenn.edu>"]
 readme = "README.md"
-packages = [{include = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-geopandas = "^0.13.2"
-geopy = "^2.4.0"
-pandas = "^2.0.3"
-numpy = "^1.25.2"
-r5py = "^0.1.0"
-tqdm = "^4.66.1"
-pyyaml = "^6.0.1"
-matplotlib = "^3.7.2"
-folium = "^0.14.0"
-mapclassify = "^2.6.0"
-census = "^0.8.20"
-us = "^3.1.1"
-selenium = "^4.13.0"
-gtfsutils = "^0.0.5"
+selenium = "^4.15.2"
 
-
-[tool.poetry.group.dev.dependencies]
-ipykernel = "^6.25.1"
 
 [build-system]
 requires = ["poetry-core"]
