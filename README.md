@@ -1,3 +1,22 @@
+# An Assessment of the Impact of the Baltimore Red Line on Job Accessibility
+
+This is the codebase accompanying our report [An Assessment of the Impact of the Baltimore Red Line on Job Accessibility]().
+
+## The working group
+- [Yangxinyu Xie](https://xieyangxinyu.github.io), PhD Candidate, Department of Statistics, University of Pennsylvania
+- [James Pizzurro](https://aries.dcmetrohero.com/faq#about), ARIES for Transit Project
+- [Fadil Santosa](https://snfagora.jhu.edu/person/fadil-santosa/), Professor, Department of Applied Mathematics and Statistics, Johns Hopkins University
+- [Elizabeth O’Reilly](https://sites.google.com/view/eliza-oreilly/home), Assistant Professor, Department of Applied Mathematics and Statistics, Johns Hopkins University 
+
+We acknowledge the contributions of the following individuals to this report:
+- Adam Lee, Energage
+- Craig Gross, Michigan State University
+- Kethaki Varadan, Lawrence Livermore National Laboratory
+- Meghan Weil Latshaw, Associate Scientist, Johns Hopkins University
+- Eliora Bard, Howard County Community College
+- Thomas Li, Johns Hopkins University
+
+
 ## Requirements
 
 We use poetry for maintaining package dependencies. In particular, we use Python 3.10. Dependency can be installed using the following command:
@@ -33,7 +52,7 @@ exit
 Please refer to the project directory tree below.
 
 ### Download the Raw Data.
-The raw data are downloaded from various sources listed above. We prepared a Google Drive link with all the raw data we used for this project. GTFS data from Transit Land can be downloaded from the script, by providing your API key in `src/config.yaml` and running 
+The raw data are downloaded from various sources listed above. We prepared a [Box Drive link](https://upenn.box.com/s/08a0r28gho4ahxfoxmatqsjnz1tyg303) with all the raw and processed data we used for this project. GTFS data from Transit Land can be downloaded from the script, by providing your API key in `src/config.yaml` and running 
 ```
 python src/prepare_GTFS/download_GTFS.py
 ```
@@ -42,7 +61,7 @@ LODES data can also be downloaded from the script, by running
 python src/data visualisation/download_lodes_data.py
 ```
 ### Generate the processed data:
-- Step 0: Change to the root directory of this project.
+- Step 0: Change to the root directory of this project. You can change the parameters for the scripts below in `src/config.yaml`.
 - Step 1: Preprocess historical bus data. Run
 ```
 python src/preprocess.py
@@ -63,7 +82,7 @@ python src/accessibility/diff.py
 
 ### Visualize the Results
 
-All results in the report can be reproduced by running the notebooks under `src/data visualisation`.
+All results in the report can be reproduced by running the notebooks under `src/data visualization`.
 
 
 ## Project Directory Tree
@@ -182,7 +201,7 @@ All results in the report can be reproduced by running the notebooks under `src/
 │   │   ├── quantile.py
 │   │   └── util.py
 │   ├── config.yaml
-│   ├── data visualisation
+│   ├── data visualization
 │   │   ├── case studies.ipynb
 │   │   ├── download_lodes_data.py
 │   │   ├── job centers.ipynb
